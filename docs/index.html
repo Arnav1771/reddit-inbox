@@ -898,6 +898,7 @@
   }
   </script>
 
+  <script src="data.js"></script>
   <script>
   (function () {
     let dataset = null;
@@ -918,16 +919,20 @@
     const toast = document.getElementById('toast');
 
     async function loadData() {
-      try {
-        const resp = await fetch('data.json');
-        if (resp.ok) {
-          dataset = await resp.json();
-        } else {
-          throw new Error('Fallback to embedded');
+      if (window.__REDDIT_INBOX_DATA__) {
+        dataset = window.__REDDIT_INBOX_DATA__;
+      } else {
+        try {
+          const resp = await fetch('data.json');
+          if (resp.ok) {
+            dataset = await resp.json();
+          } else {
+            throw new Error('Fallback to embedded');
+          }
+        } catch (e) {
+          const embedded = document.getElementById('embedded-data');
+          if (embedded) dataset = JSON.parse(embedded.textContent);
         }
-      } catch (e) {
-        const embedded = document.getElementById('embedded-data');
-        if (embedded) dataset = JSON.parse(embedded.textContent);
       }
       renderSidebarStats();
       renderSubredditsNav();

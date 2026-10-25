@@ -85,9 +85,16 @@ class VaultManager:
         with open(self.web_data_file, "w", encoding="utf-8") as f:
             json.dump(web_payload, f, indent=2, ensure_ascii=False)
 
+        # Write data.js for zero-CORS file:// local double-click execution
+        js_content = f"window.__REDDIT_INBOX_DATA__ = {json.dumps(web_payload, indent=2, ensure_ascii=False)};\n"
+        with open(self.web_data_file.parent / "data.js", "w", encoding="utf-8") as f:
+            f.write(js_content)
+
         if DOCS_DATA_FILE.parent.exists():
             with open(DOCS_DATA_FILE, "w", encoding="utf-8") as f:
                 json.dump(web_payload, f, indent=2, ensure_ascii=False)
+            with open(DOCS_DATA_FILE.parent / "data.js", "w", encoding="utf-8") as f:
+                f.write(js_content)
 
         return stats
 
