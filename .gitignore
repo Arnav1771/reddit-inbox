@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local environments & secrets
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Quarantine and dynamic logs (keep repo clean)
+data/quarantine.json
+*.log
+.DS_Store
+Thumbs.db
