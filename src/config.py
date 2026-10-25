@@ -11,12 +11,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 VAULT_DIR = BASE_DIR / "vault"
 WEB_DIR = BASE_DIR / "web"
+DOCS_DIR = BASE_DIR / "docs"
 
 # Cache and data files
 INBOX_FILE = DATA_DIR / "inbox.json"
 CACHE_FILE = DATA_DIR / "cache.json"
 LOW_CONFIDENCE_FILE = DATA_DIR / "quarantine.json"
 WEB_DATA_FILE = WEB_DIR / "data.json"
+DOCS_DATA_FILE = DOCS_DIR / "data.json"
 
 # Signal & Confidence Thresholds
 DEFAULT_WORTHY_THRESHOLD = 80.0  # Only items >= 80% make it to the main feed/vault

@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Dict, Any
 
-from src.config import INBOX_FILE, LOW_CONFIDENCE_FILE, VAULT_DIR, WEB_DATA_FILE
+from src.config import INBOX_FILE, LOW_CONFIDENCE_FILE, VAULT_DIR, WEB_DATA_FILE, DOCS_DATA_FILE
 
 
 class VaultManager:
@@ -84,6 +84,10 @@ class VaultManager:
         }
         with open(self.web_data_file, "w", encoding="utf-8") as f:
             json.dump(web_payload, f, indent=2, ensure_ascii=False)
+
+        if DOCS_DATA_FILE.parent.exists():
+            with open(DOCS_DATA_FILE, "w", encoding="utf-8") as f:
+                json.dump(web_payload, f, indent=2, ensure_ascii=False)
 
         return stats
 

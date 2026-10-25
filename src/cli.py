@@ -196,18 +196,20 @@ def cmd_eval(args):
 
 
 def cmd_serve(args):
-    """Serves the Google Stitch interactive dashboard locally."""
+    """Serves the Google Stitch / Notion interactive dashboard locally."""
     port = args.port or 8085
+    docs_dir = Path(__file__).resolve().parent.parent / "docs"
     web_dir = Path(__file__).resolve().parent.parent / "web"
+    target_dir = docs_dir if docs_dir.exists() else web_dir
     
     # Ensure web data exists
-    if not WEB_DATA_FILE.exists():
+    if not (target_dir / "data.json").exists():
         print("Web data not found. Running initial seed...")
         cmd_init(args)
 
     class CustomHandler(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *args_inner, **kwargs):
-            super().__init__(*args_inner, directory=str(web_dir), **kwargs)
+            super().__init__(*args_inner, directory=str(target_dir), **kwargs)
 
         def log_message(self, format, *args_inner):
             # Suppress noisy HTTP asset logs
@@ -215,7 +217,7 @@ def cmd_serve(args):
 
     print("\n" + "=" * 60)
     print(f"⚡ Reddit Inbox Dashboard running at: http://localhost:{port}")
-    print("   Google Stitch Anti-Slop Dark Mode · Live Confidence Slider")
+    print("   Notion / Google Stitch Dark Specification · Live Confidence Slider")
     print("   Press Ctrl+C to terminate server.")
     print("=" * 60)
 
