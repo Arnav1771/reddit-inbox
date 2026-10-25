@@ -1,0 +1,280 @@
+[
+  {
+    "title": "Showcase: morluto/rea - Reverse Engineer Anything with Model Context Protocol (MCP)",
+    "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1rea001/reverse_engineer_anything_morluto_rea/",
+    "author": "security_dev_lead",
+    "published_at": "2026-10-24T18:30:00Z",
+    "subreddit": "r/BestGitHubRepos",
+    "confidence_score": 99.0,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/morluto/rea"
+    ],
+    "matched_keywords": [
+      "mcp",
+      "model context protocol",
+      "clean-room",
+      "reverse engineer",
+      "ghidra",
+      "asar",
+      "ipc"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/morluto/rea"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+20.5 pts",
+        "detail": "Matched: mcp, model context protocol, clean-room, reverse engineer, ghidra, asar"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `morluto/rea` addressing developer workflows for Showcase: morluto/rea - Reverse Engineer Anything with Model Context Protocol.",
+      "**Architecture & Tech:** Employs architectural paradigms around mcp, model context protocol, clean-room, reverse engineer to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/morluto/rea` for integration into autonomous agent pipelines."
+    ],
+    "category": "Open Source Breakthroughs"
+  },
+  {
+    "title": "My friends and I built Orbit: an open-source Discord-like chat with WebRTC Voice and zero Electron RAM bloat",
+    "url": "https://www.reddit.com/r/projects/comments/1xe4mi2/my_friends_and_i_built_orbit_a_discordlike_chat/",
+    "author": "orbit_core",
+    "published_at": "2026-10-23T14:15:00Z",
+    "subreddit": "r/projects",
+    "confidence_score": 90.2,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/Arnav1771/discord-client"
+    ],
+    "matched_keywords": [
+      "webrtc",
+      "sqlite",
+      "websocket"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/Arnav1771/discord-client"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+7.0 pts",
+        "detail": "Matched: webrtc, sqlite, websocket"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `Arnav1771/discord-client` addressing developer workflows for My friends and I built Orbit: an open-source Discord-like chat with WebRTC Voice.",
+      "**Architecture & Tech:** Employs architectural paradigms around webrtc, sqlite, websocket to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/Arnav1771/discord-client` for integration into autonomous agent pipelines."
+    ],
+    "category": "Indie Engineering"
+  },
+  {
+    "title": "BuilderIO/agent-native: Open-Source Framework for Autonomous Agentic Apps with Interactive UIs",
+    "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1bldio1/builderio_agent_native_framework/",
+    "author": "oss_curator",
+    "published_at": "2026-10-25T08:00:00Z",
+    "subreddit": "r/BestGitHubRepos",
+    "confidence_score": 82.5,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/BuilderIO/agent-native"
+    ],
+    "matched_keywords": [],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/BuilderIO/agent-native"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `BuilderIO/agent-native` addressing developer workflows for BuilderIO/agent-native: Open-Source Framework for Autonomous Agentic Apps with I.",
+      "**Architecture & Tech:** Practical production implementation tested across modern runtime environments.",
+      "**Takeaway:** Verified source code available at `https://github.com/BuilderIO/agent-native` for integration into autonomous agent pipelines."
+    ],
+    "category": "Open Source Breakthroughs"
+  },
+  {
+    "title": "docker/docker-agent: Declarative AI Agent Containers with Native Model Context Protocol (MCP)",
+    "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1dock01/docker_docker_agent_mcp_containers/",
+    "author": "infra_lead",
+    "published_at": "2026-10-24T19:20:00Z",
+    "subreddit": "r/BestGitHubRepos",
+    "confidence_score": 91.3,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/docker/docker-agent"
+    ],
+    "matched_keywords": [
+      "mcp",
+      "model context protocol",
+      "docker"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/docker/docker-agent"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+8.0 pts",
+        "detail": "Matched: mcp, model context protocol, docker"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `docker/docker-agent` addressing developer workflows for docker/docker-agent: Declarative AI Agent Containers with Native Model Context P.",
+      "**Architecture & Tech:** Employs architectural paradigms around mcp, model context protocol, docker to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/docker/docker-agent` for integration into autonomous agent pipelines."
+    ],
+    "category": "Open Source Breakthroughs"
+  },
+  {
+    "title": "Quorus Architecture: Running Driver/Reviewer Dual Claude Code Agents in Isolated Git Worktrees",
+    "url": "https://www.reddit.com/r/ClaudeCode/comments/1gquor1/quorus_dual_agent_driver_reviewer_git_worktrees/",
+    "author": "agentic_architect",
+    "published_at": "2026-10-25T09:20:00Z",
+    "subreddit": "r/ClaudeCode",
+    "confidence_score": 98.5,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/Quorus-dev/Quorus"
+    ],
+    "matched_keywords": [
+      "worktree",
+      "git worktree",
+      "harness",
+      "lifecycle hook",
+      "claude code"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/Quorus-dev/Quorus"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+14.5 pts",
+        "detail": "Matched: worktree, git worktree, harness, lifecycle hook, claude code"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `Quorus-dev/Quorus` addressing developer workflows for Quorus Architecture: Running Driver/Reviewer Dual Claude Code Agents in Isolated.",
+      "**Architecture & Tech:** Employs architectural paradigms around worktree, git worktree, harness, lifecycle hook to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/Quorus-dev/Quorus` for integration into autonomous agent pipelines."
+    ],
+    "category": "Agentic Architecture"
+  },
+  {
+    "title": "Stop Bloating CLAUDE.md: How Progressive Disclosure SKILL.md Cut Our Token Bill by 68%",
+    "url": "https://www.reddit.com/r/ClaudeCode/comments/1hskil9/stop_bloating_claudemd_progressive_disclosure_skills/",
+    "author": "token_economist",
+    "published_at": "2026-10-24T11:45:00Z",
+    "subreddit": "r/ClaudeCode",
+    "confidence_score": 96.3,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/anthropics/skills",
+      "https://github.com/daymade/claude-code-skills"
+    ],
+    "matched_keywords": [
+      "prompt cache",
+      "cache ttl",
+      "skill.md",
+      "progressive disclosure"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/anthropics/skills"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+12.5 pts",
+        "detail": "Matched: prompt cache, cache ttl, skill.md, progressive disclosure"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `anthropics/skills` addressing developer workflows for Stop Bloating CLAUDE.md: How Progressive Disclosure SKILL.md Cut Our Token Bill .",
+      "**Architecture & Tech:** Employs architectural paradigms around prompt cache, cache ttl, skill.md, progressive disclosure to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/anthropics/skills` for integration into autonomous agent pipelines."
+    ],
+    "category": "Agentic Architecture"
+  },
+  {
+    "title": "Curing AI Slop: Rejecting Default Inter, Purple Glows, and 3-Card Layouts with Google Stitch Tokens",
+    "url": "https://www.reddit.com/r/UI_Design/comments/1uslop9/curing_ai_slop_rejecting_default_purple_glows_design_tokens/",
+    "author": "craft_first",
+    "published_at": "2026-10-25T04:10:00Z",
+    "subreddit": "r/UI_Design",
+    "confidence_score": 93.0,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/stitch-tokens/anti-slop"
+    ],
+    "matched_keywords": [
+      "design token",
+      "anti-slop",
+      "spring physics"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/stitch-tokens/anti-slop"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+9.5 pts",
+        "detail": "Matched: design token, anti-slop, spring physics"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `stitch-tokens/anti-slop` addressing developer workflows for Curing AI Slop: Rejecting Default Inter, Purple Glows, and 3-Card Layouts with G.",
+      "**Architecture & Tech:** Employs architectural paradigms around design token, anti-slop, spring physics to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/stitch-tokens/anti-slop` for integration into autonomous agent pipelines."
+    ],
+    "category": "UI/UX & Anti-Slop"
+  },
+  {
+    "title": "karpathy/llm.c: Bare-Metal Transformer Training Kernels in 1,000 Lines of Pure C/CUDA",
+    "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1karpllm/karpathy_llm_c_bare_metal_training/",
+    "author": "cuda_hacker",
+    "published_at": "2026-10-24T16:00:00Z",
+    "subreddit": "r/BestGitHubRepos",
+    "confidence_score": 82.5,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/karpathy/llm.c"
+    ],
+    "matched_keywords": [],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/karpathy/llm.c"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `karpathy/llm.c` addressing developer workflows for karpathy/llm.c: Bare-Metal Transformer Training Kernels in 1,000 Lines of Pure C.",
+      "**Architecture & Tech:** Practical production implementation tested across modern runtime environments.",
+      "**Takeaway:** Verified source code available at `https://github.com/karpathy/llm.c` for integration into autonomous agent pipelines."
+    ],
+    "category": "Open Source Breakthroughs"
+  }
+]
