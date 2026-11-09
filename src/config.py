@@ -77,6 +77,6 @@ DEFAULT_SUBREDDITS = [
 ]
 
 # Network settings
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) RedditInboxEngine/1.0.0 (by /u/Arnav1771; high-signal SDE curator)"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 (RedditInbox/1.1; Contact: /u/Arnav1771)"
 SALAMANCE_PROXY_URL = "http://130.210.17.89:5050"
 REQUEST_TIMEOUT = 12.0

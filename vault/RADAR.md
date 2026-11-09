@@ -2,7 +2,48 @@
 
 > **Strictly Curated Intelligence** · Filtered at ≥80.0% Confidence Threshold
 
-*Last Updated: 2026-10-25 13:53:31 UTC*
+*Last Updated: 2026-11-09 03:45:53 UTC*
+
+---
+
+### [I used Claude Code to rebuild IDM as a free, open-source download manager, the ArtCraft way. Mister Download Manager, in Rust, 0.5 just shipped](https://www.reddit.com/r/ClaudeAI/comments/1xqy0s6/i_used_claude_code_to_rebuild_idm_as_a_free/)
+
+**Subreddit:** `r/ClaudeAI` | **Date:** `2026-11-08` | **Confidence:** `99.0%` 🛡️
+
+**Discovered GitHub Repositories:** [anefzaoui/misterdownloadmanager](https://github.com/anefzaoui/misterdownloadmanager)
+
+**High-Signal Brief:**
+- **Tool & Solution:** Open-source project `anefzaoui/misterdownloadmanager` addressing developer workflows for I used Claude Code to rebuild IDM as a free, open-source download manager, the A.
+- **Architecture & Tech:** Employs architectural paradigms around worktree, git worktree, claude code, clean-room to ensure deterministic, scalable behavior.
+- **Takeaway:** Verified source code available at `https://github.com/anefzaoui/misterdownloadmanager` for integration into autonomous agent pipelines.
+
+<details><summary>Scoring Factors</summary>
+
+- `+25.0 pts`: Discovered GitHub Repository (https://github.com/anefzaoui/misterdownloadmanager)
+- `+15.0 pts`: High-Signal Engineering Density (Matched: worktree, git worktree, claude code, clean-room, rust)
+- `+8 pts`: In-Depth Post (150+ words) (376 words)
+
+</details>
+
+---
+
+### [Open sourced DaVinci Resolve in C++ with h264, h265, AAC support on Linux and miles better performance.](https://www.reddit.com/r/ClaudeAI/comments/1xr312k/open_sourced_davinci_resolve_in_c_with_h264_h265/)
+
+**Subreddit:** `r/ClaudeAI` | **Date:** `2026-11-08` | **Confidence:** `87.2%` 🛡️
+
+**Discovered GitHub Repositories:** [SeniorMatt/kinoklip](https://github.com/SeniorMatt/kinoklip)
+
+**High-Signal Brief:**
+- **Tool & Solution:** Open-source project `SeniorMatt/kinoklip` addressing developer workflows for Open sourced DaVinci Resolve in C++ with h264, h265, AAC support on Linux and mi.
+- **Architecture & Tech:** Practical production implementation tested across modern runtime environments.
+- **Takeaway:** Verified source code available at `https://github.com/SeniorMatt/kinoklip` for integration into autonomous agent pipelines.
+
+<details><summary>Scoring Factors</summary>
+
+- `+25.0 pts`: Discovered GitHub Repository (https://github.com/SeniorMatt/kinoklip)
+- `+8 pts`: In-Depth Post (150+ words) (737 words)
+
+</details>
 
 ---
 

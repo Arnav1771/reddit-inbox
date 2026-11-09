@@ -9,6 +9,7 @@ import sys
 import os
 import io
 import json
+import time
 import http.server
 import socketserver
 import urllib.request
@@ -136,6 +137,7 @@ def cmd_sync(args):
                 all_noise.append(evaluated)
 
         print(f"{worthy_count} worthy / {len(posts) - worthy_count} noise")
+        time.sleep(1.0)
 
     # If no live posts returned due to network limits, ensure pre-seeded baseline is present
     if not all_worthy and not vault.load_inbox():

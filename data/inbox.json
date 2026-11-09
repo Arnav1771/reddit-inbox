@@ -1,5 +1,80 @@
 [
   {
+    "title": "I used Claude Code to rebuild IDM as a free, open-source download manager, the ArtCraft way. Mister Download Manager, in Rust, 0.5 just shipped",
+    "url": "https://www.reddit.com/r/ClaudeAI/comments/1xqy0s6/i_used_claude_code_to_rebuild_idm_as_a_free/",
+    "author": "/u/Nefzaoui",
+    "published_at": "2026-11-08T13:07:25+00:00",
+    "subreddit": "r/ClaudeAI",
+    "confidence_score": 99.0,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/anefzaoui/misterdownloadmanager"
+    ],
+    "matched_keywords": [
+      "worktree",
+      "git worktree",
+      "claude code",
+      "clean-room",
+      "rust"
+    ],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/anefzaoui/misterdownloadmanager"
+      },
+      {
+        "name": "High-Signal Engineering Density",
+        "delta": "+15.0 pts",
+        "detail": "Matched: worktree, git worktree, claude code, clean-room, rust"
+      },
+      {
+        "name": "In-Depth Post (150+ words)",
+        "delta": "+8 pts",
+        "detail": "376 words"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `anefzaoui/misterdownloadmanager` addressing developer workflows for I used Claude Code to rebuild IDM as a free, open-source download manager, the A.",
+      "**Architecture & Tech:** Employs architectural paradigms around worktree, git worktree, claude code, clean-room to ensure deterministic, scalable behavior.",
+      "**Takeaway:** Verified source code available at `https://github.com/anefzaoui/misterdownloadmanager` for integration into autonomous agent pipelines."
+    ],
+    "category": "LLM Paradigms"
+  },
+  {
+    "title": "Open sourced DaVinci Resolve in C++ with h264, h265, AAC support on Linux and miles better performance.",
+    "url": "https://www.reddit.com/r/ClaudeAI/comments/1xr312k/open_sourced_davinci_resolve_in_c_with_h264_h265/",
+    "author": "/u/SeniorMatthew",
+    "published_at": "2026-11-08T16:54:56+00:00",
+    "subreddit": "r/ClaudeAI",
+    "confidence_score": 87.2,
+    "is_worthy": true,
+    "verdict": "WORTHY",
+    "github_repos": [
+      "https://github.com/SeniorMatt/kinoklip"
+    ],
+    "matched_keywords": [],
+    "factors": [
+      {
+        "name": "Discovered GitHub Repository",
+        "delta": "+25.0 pts",
+        "detail": "https://github.com/SeniorMatt/kinoklip"
+      },
+      {
+        "name": "In-Depth Post (150+ words)",
+        "delta": "+8 pts",
+        "detail": "737 words"
+      }
+    ],
+    "synthesis": [
+      "**Tool & Solution:** Open-source project `SeniorMatt/kinoklip` addressing developer workflows for Open sourced DaVinci Resolve in C++ with h264, h265, AAC support on Linux and mi.",
+      "**Architecture & Tech:** Practical production implementation tested across modern runtime environments.",
+      "**Takeaway:** Verified source code available at `https://github.com/SeniorMatt/kinoklip` for integration into autonomous agent pipelines."
+    ],
+    "category": "LLM Paradigms"
+  },
+  {
     "title": "Showcase: morluto/rea - Reverse Engineer Anything with Model Context Protocol (MCP)",
     "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1rea001/reverse_engineer_anything_morluto_rea/",
     "author": "security_dev_lead",
