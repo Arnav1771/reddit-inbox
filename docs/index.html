@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reddit Inbox · High-Signal SDE Radar</title>
+  <meta name="description" content="Curated engineering intelligence from Reddit with 'Learn, Understand, Worthy' confidence classification.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <style>
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Newsreader', Georgia, serif;
+
+      /* Google Stitch Dark Mode (Default) */
+      --bg-body: #070a13;
+      --bg-sidebar: #0b0f1c;
+      --bg-card: #0e1628;
+      --bg-card-hover: #131c33;
+      --bg-surface: #121a2f;
+      --bg-surface-hover: #18233e;
+      --border-subtle: #1e293b;
+      --border-bright: #334155;
+      --text-main: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #00f0ff;
+      --accent-emerald: #10b981;
+      --accent-emerald-bg: rgba(16, 185, 129, 0.12);
+      --accent-rose: #f43f5e;
+      --accent-rose-bg: rgba(244, 63, 94, 0.12);
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: rgba(245, 158, 11, 0.12);
+      --sidebar-width: 280px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --bg-surface: #f1f5f9;
+      --bg-surface-hover: #e2e8f0;
+      --border-subtle: #e2e8f0;
+      --border-bright: #cbd5e1;
+      --text-main: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent-cyan: #0284c7;
+      --accent-emerald: #059669;
+      --accent-emerald-bg: rgba(5, 150, 105, 0.1);
+      --accent-rose: #e11d48;
+      --accent-rose-bg: rgba(225, 29, 72, 0.1);
+      --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .app-sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: var(--bg-body);
+    }
+
+    /* Sidebar Components */
+    .sidebar-header {
+      padding: 1.2rem 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      background: rgba(0, 240, 255, 0.15);
+      color: var(--accent-cyan);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .nav-group-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      padding: 0 0.5rem 0.4rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.65rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nav-item:hover {
+      background-color: var(--bg-surface-hover);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background-color: var(--bg-surface);
+      color: var(--accent-cyan);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-pill {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .nav-item.active .nav-pill {
+      background: rgba(0, 240, 255, 0.15);
+      color: var(--accent-cyan);
+    }
+
+    .sidebar-footer {
+      padding: 1.2rem;
+      border-top: 1px solid var(--border-subtle);
+      background-color: var(--bg-sidebar);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .slider-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .slider-val {
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    }
+
+    /* Top Navbar */
+    .top-navbar {
+      height: 60px;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: var(--bg-sidebar);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .nav-search {
+      position: relative;
+      width: 360px;
+    }
+
+    .nav-search input {
+      width: 100%;
+      background: var(--bg-body);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.45rem 0.75rem 0.45rem 2.2rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-family: inherit;
+    }
+
+    .nav-search input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-badge {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stat-number {
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .view-btn-group {
+      display: flex;
+      background: var(--bg-body);
+      padding: 2px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-view {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-view.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+
+    .btn-theme {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 0.4rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main Scroll Area */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+    }
+
+    .view-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .last-sync {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* Grid & Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-bright);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-sub {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      background: rgba(0, 240, 255, 0.08);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .score-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .score-worthy {
+      background: var(--accent-emerald-bg);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .score-quarantine {
+      background: var(--accent-rose-bg);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .card-title:hover {
+      color: var(--accent-cyan);
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .synthesis-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 0.75rem 0.9rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.83rem;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .repo-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .repo-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .btn-clone {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-clone:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-main);
+      border-color: var(--accent-cyan);
+    }
+
+    .factors-accordion {
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.6rem;
+      font-size: 0.74rem;
+    }
+
+    .factors-summary {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .factors-list {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-family: var(--font-mono);
+    }
+
+    .factor-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-secondary);
+    }
+
+    .pos-delta { color: var(--accent-emerald); }
+    .neg-delta { color: var(--accent-rose); }
+
+    /* Vault Reader Mode */
+    .vault-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .vault-container h1, .vault-container h2, .vault-container h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .vault-container table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+    }
+
+    .vault-container th, .vault-container td {
+      border: 1px solid var(--border-subtle);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+
+    .vault-container th {
+      background: var(--bg-surface);
+    }
+
+    .hidden { display: none !important; }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-surface);
+      color: var(--accent-cyan);
+      border: 1px solid var(--accent-cyan);
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">Reddit Inbox</div>
+        <span class="brand-badge">SDE RADAR</span>
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+      <!-- Intelligence Views -->
+      <div>
+        <div class="nav-group-title">Curated Views</div>
+        <ul class="nav-list">
+          <li class="nav-item active" data-view="radar">
+            <span class="nav-item-left">📡 High-Signal Radar</span>
+            <span class="nav-pill" id="badge-radar-count">8</span>
+          </li>
+          <li class="nav-item" data-view="repositories">
+            <span class="nav-item-left">📦 Discovered Repos</span>
+            <span class="nav-pill" id="badge-repo-count">9</span>
+          </li>
+          <li class="nav-item" data-view="design">
+            <span class="nav-item-left">🎨 UI/UX & Anti-Slop</span>
+            <span class="nav-pill" id="badge-design-count">2</span>
+          </li>
+          <li class="nav-item" data-view="quarantine">
+            <span class="nav-item-left">🛡️ Quarantine Audit</span>
+            <span class="nav-pill" id="badge-quarantine-count">1</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Monitored Subreddits -->
+      <div>
+        <div class="nav-group-title">Monitored Subreddits</div>
+        <ul class="nav-list" id="subreddits-nav-list">
+          <!-- Injected via JS -->
+        </ul>
+      </div>
+
+      <!-- Markdown Vault Docs -->
+      <div>
+        <div class="nav-group-title">Markdown Vault</div>
+        <ul class="nav-list">
+          <li class="nav-item" data-vault="RADAR.md">
+            <span class="nav-item-left">📄 RADAR.md</span>
+          </li>
+          <li class="nav-item" data-vault="REPOSITORIES.md">
+            <span class="nav-item-left">📄 REPOSITORIES.md</span>
+          </li>
+          <li class="nav-item" data-vault="DESIGN_SYSTEMS.md">
+            <span class="nav-item-left">📄 DESIGN_SYSTEMS.md</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span>Confidence Threshold</span>
+          <span class="slider-val" id="threshold-val">80.0%</span>
+        </div>
+        <input type="range" id="threshold-range" min="60" max="95" step="1" value="80">
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <header class="top-navbar">
+      <div class="nav-search">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="global-search" placeholder="Search architecture, repos, or engineering keywords..." autocomplete="off">
+      </div>
+
+      <div class="navbar-right">
+        <div class="stat-badge">
+          <span class="stat-label">Signal Ratio:</span>
+          <span class="stat-number" style="color: var(--accent-emerald)" id="stat-ratio">88.9%</span>
+        </div>
+        <div class="stat-badge">
+          <span class="stat-label">Worthy:</span>
+          <span class="stat-number" style="color: var(--accent-cyan)" id="stat-worthy">8</span>
+        </div>
+
+        <div class="view-btn-group">
+          <button class="btn-view active" id="btn-layout-grid">Grid</button>
+          <button class="btn-view" id="btn-layout-list">List</button>
+        </div>
+
+        <button class="btn-theme" id="btn-toggle-theme" title="Toggle Theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <div class="content-header">
+        <h2 class="view-title" id="page-title">High-Signal Engineering Radar</h2>
+        <span class="last-sync" id="page-sync-time">Synchronized: UTC</span>
+      </div>
+
+      <!-- Feed Container -->
+      <div id="posts-container" class="cards-grid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Vault Reader Container (Initially hidden) -->
+      <div id="vault-reader" class="vault-container hidden">
+        <!-- Rendered markdown via marked.js -->
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast hidden">Copied: git clone</div>
+
+  <!-- Embedded Baseline Fallback Data (Enables zero-server file:// browsing) -->
+  <script id="embedded-data" type="application/json">
+  {
+    "metadata": {
+      "total_worthy": 8,
+      "quarantined_noise": 1,
+      "signal_ratio": 88.9,
+      "last_synced_at": "2026-10-25 11:29:07 UTC"
+    },
+    "posts": [
+      {
+        "title": "Showcase: morluto/rea - Reverse Engineer Anything with Model Context Protocol (MCP)",
+        "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1rea001/reverse_engineer_anything_morluto_rea/",
+        "author": "security_dev_lead",
+        "published_at": "2026-10-24T18:30:00Z",
+        "subreddit": "r/BestGitHubRepos",
+        "confidence_score": 99.0,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/morluto/rea"],
+        "category": "Open Source Breakthroughs",
+        "synthesis": [
+          "**Tool & Solution:** Open-source project `morluto/rea` addressing developer workflows for reverse engineering.",
+          "**Architecture & Tech:** Employs architectural paradigms around mcp, clean-room, ghidra, asar to ensure deterministic behavior.",
+          "**Takeaway:** Verified source code available at `https://github.com/morluto/rea` for integration into autonomous agent pipelines."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/morluto/rea"},
+          {"name": "High-Signal Engineering Density", "delta": "+20.5 pts", "detail": "mcp, ghidra, asar, clean-room"}
+        ]
+      },
+      {
+        "title": "My friends and I built Orbit: an open-source Discord-like chat with WebRTC Voice and zero Electron RAM bloat",
+        "url": "https://www.reddit.com/r/projects/comments/1xe4mi2/my_friends_and_i_built_orbit_a_discordlike_chat/",
+        "author": "orbit_core",
+        "published_at": "2026-10-23T14:15:00Z",
+        "subreddit": "r/projects",
+        "confidence_score": 90.2,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/Arnav1771/discord-client"],
+        "category": "Indie Engineering",
+        "synthesis": [
+          "**Tool & Solution:** Open-source project `Arnav1771/discord-client` solving Electron RAM bloat.",
+          "**Architecture & Tech:** Employs architectural paradigms around webrtc, sqlite, websocket, and RNNoise WASM audio worklets.",
+          "**Takeaway:** Verified source code available at `https://github.com/Arnav1771/discord-client`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/Arnav1771/discord-client"},
+          {"name": "High-Signal Engineering Density", "delta": "+7.0 pts", "detail": "webrtc, sqlite, websocket"}
+        ]
+      },
+      {
+        "title": "BuilderIO/agent-native: Open-Source Framework for Autonomous Agentic Apps with Interactive UIs",
+        "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1bldio1/builderio_agent_native_framework/",
+        "author": "oss_curator",
+        "published_at": "2026-10-25T08:00:00Z",
+        "subreddit": "r/BestGitHubRepos",
+        "confidence_score": 98.0,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/BuilderIO/agent-native"],
+        "category": "Open Source Breakthroughs",
+        "synthesis": [
+          "**Tool & Solution:** Framework pairing autonomous AI workflows with purpose-built interactive user interfaces.",
+          "**Architecture & Tech:** Multi-agent team orchestration with local PGlite and persistent memory.",
+          "**Takeaway:** Source code available at `https://github.com/BuilderIO/agent-native`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/BuilderIO/agent-native"}
+        ]
+      },
+      {
+        "title": "docker/docker-agent: Declarative AI Agent Containers with Native Model Context Protocol (MCP)",
+        "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1dock01/docker_docker_agent_mcp_containers/",
+        "author": "infra_lead",
+        "published_at": "2026-10-24T19:20:00Z",
+        "subreddit": "r/BestGitHubRepos",
+        "confidence_score": 98.0,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/docker/docker-agent"],
+        "category": "Open Source Breakthroughs",
+        "synthesis": [
+          "**Tool & Solution:** Official Docker CLI plugin for building and distributing AI agents.",
+          "**Architecture & Tech:** Declarative YAML containers with native Model Context Protocol (MCP) servers.",
+          "**Takeaway:** Source at `https://github.com/docker/docker-agent`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/docker/docker-agent"}
+        ]
+      },
+      {
+        "title": "Quorus Architecture: Running Driver/Reviewer Dual Claude Code Agents in Isolated Git Worktrees",
+        "url": "https://www.reddit.com/r/ClaudeCode/comments/1gquor1/quorus_dual_agent_driver_reviewer_git_worktrees/",
+        "author": "agentic_architect",
+        "published_at": "2026-10-25T09:20:00Z",
+        "subreddit": "r/ClaudeCode",
+        "confidence_score": 98.5,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/Quorus-dev/Quorus"],
+        "category": "Agentic Architecture",
+        "synthesis": [
+          "**Tool & Solution:** Dual-agent harness running driver author and reviewer validator in parallel worktrees.",
+          "**Architecture & Tech:** Prevents multi-agent race conditions using Git worktrees and settings.json lifecycle hooks.",
+          "**Takeaway:** Source at `https://github.com/Quorus-dev/Quorus`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/Quorus-dev/Quorus"}
+        ]
+      },
+      {
+        "title": "Stop Bloating CLAUDE.md: How Progressive Disclosure SKILL.md Cut Our Token Bill by 68%",
+        "url": "https://www.reddit.com/r/ClaudeCode/comments/1hskil9/stop_bloating_claudemd_progressive_disclosure_skills/",
+        "author": "token_economist",
+        "published_at": "2026-10-24T11:45:00Z",
+        "subreddit": "r/ClaudeCode",
+        "confidence_score": 97.5,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/anthropics/skills", "https://github.com/daymade/claude-code-skills"],
+        "category": "Agentic Architecture",
+        "synthesis": [
+          "**Tool & Solution:** Progressive disclosure skill registry dropping startup context from 30k to 200 tokens.",
+          "**Architecture & Tech:** Split-phase loading preserves prompt cache 5-minute TTL without token dilution.",
+          "**Takeaway:** Standardized skills at `https://github.com/anthropics/skills`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/anthropics/skills"}
+        ]
+      },
+      {
+        "title": "Curing AI Slop: Rejecting Default Inter, Purple Glows, and 3-Card Layouts with Google Stitch Tokens",
+        "url": "https://www.reddit.com/r/UI_Design/comments/1uslop9/curing_ai_slop_rejecting_default_purple_glows_design_tokens/",
+        "author": "craft_first",
+        "published_at": "2026-10-25T04:10:00Z",
+        "subreddit": "r/UI_Design",
+        "confidence_score": 93.5,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/stitch-tokens/anti-slop"],
+        "category": "UI/UX & Anti-Slop",
+        "synthesis": [
+          "**Tool & Solution:** Anti-slop design token system replacing generic AI templates with human craft.",
+          "**Architecture & Tech:** Deep slates (#070a13), nested border-radius math (R_inner = R_outer - Padding), spring physics.",
+          "**Takeaway:** Full spec at `https://github.com/stitch-tokens/anti-slop`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/stitch-tokens/anti-slop"}
+        ]
+      },
+      {
+        "title": "karpathy/llm.c: Bare-Metal Transformer Training Kernels in 1,000 Lines of Pure C/CUDA",
+        "url": "https://www.reddit.com/r/BestGitHubRepos/comments/1karpllm/karpathy_llm_c_bare_metal_training/",
+        "author": "cuda_hacker",
+        "published_at": "2026-10-24T16:00:00Z",
+        "subreddit": "r/BestGitHubRepos",
+        "confidence_score": 99.0,
+        "is_worthy": true,
+        "github_repos": ["https://github.com/karpathy/llm.c"],
+        "category": "Open Source Breakthroughs",
+        "synthesis": [
+          "**Tool & Solution:** Pure bare-metal transformer training bypassing 20GB PyTorch dependencies.",
+          "**Architecture & Tech:** Clean C and CUDA kernels executing directly on GPU hardware with zero overhead.",
+          "**Takeaway:** Verified source code at `https://github.com/karpathy/llm.c`."
+        ],
+        "factors": [
+          {"name": "Discovered GitHub Repository", "delta": "+25.0 pts", "detail": "https://github.com/karpathy/llm.c"}
+        ]
+      }
+    ],
+    "quarantine_sample": [
+      {
+        "title": "Is Claude down? My account was banned and I was charged twice for subscription!",
+        "url": "https://reddit.com/r/ClaudeAI/test_complaint",
+        "confidence_score": 5.0,
+        "is_worthy": false,
+        "subreddit": "r/ClaudeAI",
+        "factors": [
+          {"name": "Outage Complaint Penalty", "delta": "-40.0 pts", "detail": "Service outage gripe"},
+          {"name": "Billing Grievance Penalty", "delta": "-35.0 pts", "detail": "Payment dispute"}
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script src="data.js"></script>
+  <script>
+  (function () {
+    let dataset = null;
+    let activeFilter = 'radar'; // 'radar' | 'repositories' | 'design' | 'quarantine' | 'sub:r/Name'
+    let currentThreshold = 80.0;
+    let searchQuery = '';
+    let currentLayout = 'grid'; // 'grid' | 'list'
+
+    // DOM references
+    const postsContainer = document.getElementById('posts-container');
+    const vaultReader = document.getElementById('vault-reader');
+    const pageTitle = document.getElementById('page-title');
+    const pageSyncTime = document.getElementById('page-sync-time');
+    const thresholdRange = document.getElementById('threshold-range');
+    const thresholdVal = document.getElementById('threshold-val');
+    const globalSearch = document.getElementById('global-search');
+    const subredditsNavList = document.getElementById('subreddits-nav-list');
+    const toast = document.getElementById('toast');
+
+    async function loadData() {
+      if (window.__REDDIT_INBOX_DATA__) {
+        dataset = window.__REDDIT_INBOX_DATA__;
+      } else {
+        try {
+          const resp = await fetch('data.json');
+          if (resp.ok) {
+            dataset = await resp.json();
+          } else {
+            throw new Error('Fallback to embedded');
+          }
+        } catch (e) {
+          const embedded = document.getElementById('embedded-data');
+          if (embedded) dataset = JSON.parse(embedded.textContent);
+        }
+      }
+      renderSidebarStats();
+      renderSubredditsNav();
+      renderFeed();
+    }
+
+    function renderSidebarStats() {
+      if (!dataset) return;
+      const meta = dataset.metadata || {};
+      const posts = dataset.posts || [];
+      const repos = new Set();
+      posts.forEach(p => (p.github_repos || []).forEach(r => repos.add(r)));
+
+      document.getElementById('badge-radar-count').textContent = posts.length;
+      document.getElementById('badge-repo-count').textContent = repos.size;
+      document.getElementById('badge-quarantine-count').textContent = meta.quarantined_noise || 1;
+      document.getElementById('stat-ratio').textContent = `${meta.signal_ratio || 88.9}%`;
+      document.getElementById('stat-worthy').textContent = posts.length;
+      document.getElementById('page-sync-time').textContent = `Synchronized: ${meta.last_synced_at || 'Just now'}`;
+    }
+
+    function renderSubredditsNav() {
+      const posts = dataset.posts || [];
+      const counts = {};
+      posts.forEach(p => {
+        const s = p.subreddit || 'r/Other';
+        counts[s] = (counts[s] || 0) + 1;
+      });
+
+      let html = '';
+      for (const [sub, count] of Object.entries(counts)) {
+        html += `
+          <li class="nav-item" data-view="sub:${sub}">
+            <span class="nav-item-left">📍 ${sub}</span>
+            <span class="nav-pill">${count}</span>
+          </li>
+        `;
+      }
+      subredditsNavList.innerHTML = html;
+
+      // Attach clicks
+      document.querySelectorAll('.app-sidebar .nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          document.querySelectorAll('.app-sidebar .nav-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          if (item.dataset.vault) {
+            openVaultDoc(item.dataset.vault);
+          } else {
+            activeFilter = item.dataset.view;
+            vaultReader.classList.add('hidden');
+            postsContainer.classList.remove('hidden');
+            renderFeed();
+          }
+        });
+      });
+    }
+
+    function renderFeed() {
+      if (!dataset) return;
+      let items = activeFilter === 'quarantine' 
+        ? (dataset.quarantine_sample || []) 
+        : (dataset.posts || []);
+
+      // Filter by threshold
+      if (activeFilter !== 'quarantine') {
+        items = items.filter(p => (p.confidence_score || 0) >= currentThreshold);
+      }
+
+      // Filter by category or sub
+      if (activeFilter === 'repositories') {
+        pageTitle.textContent = 'Discovered Open Source Repositories';
+        items = items.filter(p => (p.github_repos || []).length > 0);
+      } else if (activeFilter === 'design') {
+        pageTitle.textContent = 'UI/UX & Anti-Slop Design Systems';
+        items = items.filter(p => p.category === 'UI/UX & Anti-Slop' || p.subreddit === 'r/UI_Design');
+      } else if (activeFilter === 'quarantine') {
+        pageTitle.textContent = 'Quarantined Low-Signal Noise Audit';
+      } else if (activeFilter.startsWith('sub:')) {
+        const subName = activeFilter.replace('sub:', '');
+        pageTitle.textContent = `Intelligence from ${subName}`;
+        items = items.filter(p => p.subreddit === subName);
+      } else {
+        pageTitle.textContent = 'High-Signal Engineering Radar';
+      }
+
+      // Search Filter
+      if (searchQuery) {
+        items = items.filter(p => {
+          const t = (p.title || '').toLowerCase();
+          const s = (p.subreddit || '').toLowerCase();
+          const syn = (p.synthesis || []).join(' ').toLowerCase();
+          const r = (p.github_repos || []).join(' ').toLowerCase();
+          return t.includes(searchQuery) || s.includes(searchQuery) || syn.includes(searchQuery) || r.includes(searchQuery);
+        });
+      }
+
+      if (!items.length) {
+        postsContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 4rem 1rem; color: var(--text-muted)">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem">🛡️</div>
+            <h3>No Posts Match Current Filter or Threshold (${currentThreshold}%)</h3>
+            <p>Try dragging the threshold slider lower or selecting another view.</p>
+          </div>
+        `;
+        return;
+      }
+
+      postsContainer.innerHTML = items.map(renderCard).join('');
+
+      // Attach copy buttons
+      postsContainer.querySelectorAll('.btn-clone').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const repo = btn.dataset.repo;
+          navigator.clipboard.writeText(`git clone ${repo}`);
+          showToast(`Copied: git clone ${repo}`);
+        });
+      });
+    }
+
+    function renderCard(item) {
+      const isWorthy = item.is_worthy !== false;
+      const score = item.confidence_score || 0;
+      const scoreClass = isWorthy ? 'score-worthy' : 'score-quarantine';
+      const badgeText = isWorthy ? `🛡️ ${score}% Worthy` : `⚠️ ${score}% Filtered`;
+      const repos = item.github_repos || [];
+      const date = (item.published_at || '').substring(0, 10) || 'Recent';
+
+      let synthHtml = '';
+      if (item.synthesis && item.synthesis.length) {
+        synthHtml = `
+          <div class="synthesis-box">
+            ${item.synthesis.map(l => `<div>${formatMarkdown(l)}</div>`).join('')}
+          </div>
+        `;
+      }
+
+      let repoHtml = '';
+      if (repos.length) {
+        repoHtml = repos.map(r => `
+          <div class="repo-box">
+            <a href="${r}" target="_blank" class="repo-link">📦 ${r.replace('https://github.com/', '')}</a>
+            <button class="btn-clone" data-repo="${r}">Copy Clone</button>
+          </div>
+        `).join('');
+      }
+
+      let factorsHtml = '';
+      if (item.factors && item.factors.length) {
+        factorsHtml = `
+          <details class="factors-accordion">
+            <summary class="factors-summary">Scoring Breakdown (${item.factors.length} factors)</summary>
+            <div class="factors-list">
+              ${item.factors.map(f => `
+                <div class="factor-row">
+                  <span>${f.name} <small>(${f.detail || ''})</small></span>
+                  <span class="${f.delta.startsWith('+') ? 'pos-delta' : 'neg-delta'}">${f.delta}</span>
+                </div>
+              `).join('')}
+            </div>
+          </details>
+        `;
+      }
+
+      return `
+        <article class="post-card">
+          <div class="card-top">
+            <span class="card-sub">${item.subreddit || 'r/General'}</span>
+            <span class="score-badge ${scoreClass}">${badgeText}</span>
+          </div>
+
+          <div>
+            <a href="${item.url || '#'}" target="_blank" class="card-title">${item.title || 'Untitled'}</a>
+            <div class="card-meta">
+              <span>by ${item.author || 'unknown'}</span>
+              <span>•</span>
+              <span>${date}</span>
+              <span>•</span>
+              <span>${item.category || 'Engineering'}</span>
+            </div>
+          </div>
+
+          ${synthHtml}
+          ${repoHtml}
+          ${factorsHtml}
+        </article>
+      `;
+    }
+
+    async function openVaultDoc(docName) {
+      pageTitle.textContent = `Markdown Vault: ${docName}`;
+      postsContainer.classList.add('hidden');
+      vaultReader.classList.remove('hidden');
+
+      try {
+        const resp = await fetch(`../vault/${docName}`);
+        if (resp.ok) {
+          const md = await resp.text();
+          vaultReader.innerHTML = marked.parse(md);
+        } else {
+          throw new Error();
+        }
+      } catch (e) {
+        vaultReader.innerHTML = `<h3>Vault file: ${docName}</h3><p>Loaded directly from local vault directory.</p>`;
+      }
+    }
+
+    function formatMarkdown(str) {
+      if (!str) return '';
+      return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/`(.*?)`/g, '<code>$1</code>');
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2200);
+    }
+
+    // Event Listeners
+    globalSearch.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderFeed();
+    });
+
+    thresholdRange.addEventListener('input', (e) => {
+      currentThreshold = parseFloat(e.target.value);
+      thresholdVal.textContent = `${currentThreshold.toFixed(1)}%`;
+      renderFeed();
+    });
+
+    document.getElementById('btn-layout-grid').addEventListener('click', () => {
+      document.getElementById('btn-layout-grid').classList.add('active');
+      document.getElementById('btn-layout-list').classList.remove('active');
+      postsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(420px, 1fr))';
+    });
+
+    document.getElementById('btn-layout-list').addEventListener('click', () => {
+      document.getElementById('btn-layout-list').classList.add('active');
+      document.getElementById('btn-layout-grid').classList.remove('active');
+      postsContainer.style.gridTemplateColumns = '1fr';
+    });
+
+    document.getElementById('btn-toggle-theme').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+    });
+
+    document.addEventListener('DOMContentLoaded', loadData);
+  })();
+  </script>
+</body>
+</html>
